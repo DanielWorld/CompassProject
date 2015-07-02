@@ -156,15 +156,50 @@ public class EarthDegreeConverter {
      */
     public static double getAngle(double current_lat, double current_lon, double des_lat, double des_lon){
 
-        double bearing;
+        // Normal formula isn't working, try to trick this.
 
-        bearing = Math.atan2(
-                Math.cos(current_lat) * Math.sin(des_lat) - Math.sin(current_lat) * Math.cos(des_lat)
-                        * Math.cos(des_lon - current_lon), Math.sin(des_lon - current_lon) * Math.cos(des_lat)
+        double latDistance = Math.toRadians(current_lat - des_lat);
+        double lonDistance = Math.toRadians(current_lon - des_lon);
 
-        );
+        boolean isArrowAbove;
+        boolean isArrowRight;
 
-        return bearing;
+        if(latDistance > 0){
+            // arrow directs under 0
+            isArrowAbove = false;
+        }
+        else{
+            // arrow directs above 0
+            latDistance = - latDistance;
+            isArrowAbove = true;
+        }
+
+        if(lonDistance > 0){
+            // arrow directs Left
+            isArrowRight = false;
+        }
+        else{
+            // arrow directs Right
+            lonDistance = - lonDistance;
+            isArrowRight = true;
+        }
+
+        double bearing = Math.atan2(latDistance , lonDistance);
+
+        if(isArrowAbove && isArrowRight){
+            return bearing;
+        }
+        else if(isArrowAbove && !isArrowRight){
+            return (90 - bearing) + 90;
+        }
+        else if(!isArrowAbove && isArrowRight){
+            return 360 - bearing;
+        }
+        else if(!isArrowAbove && !isArrowRight){
+            return 180 + bearing;
+        }
+
+        return 0.0f;
 
     }
 }

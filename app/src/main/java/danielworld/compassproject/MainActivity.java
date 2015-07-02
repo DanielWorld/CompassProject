@@ -22,7 +22,9 @@ public class MainActivity extends Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch(msg.what){
-
+                case 1182:
+                    mView.setBearingDirection(msg.obj);
+                    break;
             }
         }
     };

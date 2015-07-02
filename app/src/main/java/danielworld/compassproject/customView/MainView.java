@@ -211,11 +211,24 @@ public class MainView extends RelativeLayout implements SensorEventListener {
 
                 ra.setFillAfter(true);
 
+                if(bearing != 0.0f) {
+                    //**** 15.07.02 additional function *****
+                    RotateAnimation ra2 = new RotateAnimation(
+                            mCurrentDegree + bearing,
+                            -azimuthInDegress + bearing,
+                            Animation.RELATIVE_TO_SELF, 0.5f,
+                            Animation.RELATIVE_TO_SELF,
+                            0.5f);
+
+                    ra2.setDuration(250);
+
+                    ra2.setFillAfter(true);
+
+                    // 15.07.02 added canvas view
+                    canvasView.startAnimation(ra2);
+                }
+
                 compassView.startAnimation(ra);
-                // 15.07.02 added canvas view
-                canvasView.startAnimation(ra);
-
-
                 mCurrentDegree = -azimuthInDegress;
 
                 mCount3 = 0;
@@ -228,4 +241,13 @@ public class MainView extends RelativeLayout implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+    /**
+     * Set angle (bearing)
+     * @param obj
+     */
+    public void setBearingDirection(Object obj){
+        bearing = Float.parseFloat(obj.toString());
+    }
+    float bearing = 0.0f;
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -149,20 +150,26 @@ public class TopView extends RelativeLayout implements View.OnClickListener, Dia
                     ed6.requestFocus();
                 }
                 else {
-                    double whereTolatitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed1.getText().toString()), Integer.parseInt(ed2.getText().toString())
-                            , Double.parseDouble(ed3.getText().toString()), latPicker.getText().toString());
-                    double whereTolongitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed4.getText().toString()), Integer.parseInt(ed5.getText().toString())
-                            , Double.parseDouble(ed6.getText().toString()), longPicker.getText().toString());
+//                    double whereTolatitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed1.getText().toString()), Integer.parseInt(ed2.getText().toString())
+//                            , Double.parseDouble(ed3.getText().toString()), latPicker.getText().toString());
+//                    double whereTolongitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed4.getText().toString()), Integer.parseInt(ed5.getText().toString())
+//                            , Double.parseDouble(ed6.getText().toString()), longPicker.getText().toString());
 
                     // TEST
-//                    double whereTolatitude = 37.5400377;
-//                    double whereTolongitude = 126.8899627;
+                    double whereTolatitude = 37.537993;
+                    double whereTolongitude = 126.893813;
 
                     LOG.d(TAG, "lat1: " + whereTolatitude + ", long1: " + whereTolongitude);
                     double distance = Math.round(EarthDegreeConverter.distance(gpsLatitude, gpsLongitude, whereTolatitude, whereTolongitude) * 1000);
                     distanceView.setText("distance (km): " + (double) (distance / 1000));
 
                     LOG.d(TAG, "Angle : " + EarthDegreeConverter.getAngle(gpsLatitude, gpsLongitude, whereTolatitude, whereTolongitude));
+
+                    // Send message
+                    Message msg = new Message();
+                    msg.obj = EarthDegreeConverter.getAngle(gpsLatitude, gpsLongitude, whereTolatitude, whereTolongitude);
+                    msg.what = 1182;
+                    mHandler.sendMessage(msg);
                 }
                 break;
             case R.id.latitude_view:
