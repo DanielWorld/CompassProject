@@ -156,7 +156,15 @@ public class EarthDegreeConverter {
      */
     public static double getAngle(double current_lat, double current_lon, double des_lat, double des_lon){
 
+        double bearing;
 
-        return 0.0f;
+        bearing = Math.atan2(
+                Math.cos(current_lat) * Math.sin(des_lat) - Math.sin(current_lat) * Math.cos(des_lat)
+                        * Math.cos(des_lon - current_lon), Math.sin(des_lon - current_lon) * Math.cos(des_lat)
+
+        );
+
+        return bearing;
+
     }
 }

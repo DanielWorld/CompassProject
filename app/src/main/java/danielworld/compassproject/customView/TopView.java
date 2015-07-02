@@ -111,59 +111,59 @@ public class TopView extends RelativeLayout implements View.OnClickListener, Dia
             case R.id.button:
                 //...
                 // Check validation
-//                if (!ValidationCheck.checkLatitudeDegree(ed1.getText().toString())) {
-//                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Deg의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
-//                    // clear text
-//                    ed1.setText("");
-//                    // Focus on ed1
-//                    ed1.requestFocus();
-//                } else if (!ValidationCheck.checkMinute(ed2.getText().toString())) {
-//                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
-//                    // clear text
-//                    ed2.setText("");
-//                    // Focus on ed2
-//                    ed2.requestFocus();
-//                } else if (!ValidationCheck.checkSecond(ed3.getText().toString())) {
-//                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
-//                    // clear text
-//                    ed3.setText("");
-//                    // Focus on ed3
-//                    ed3.requestFocus();
-//                } else if (!ValidationCheck.checkLongitudeDegree(ed4.getText().toString())) {
-//                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "W Deg의 경우 0 ~ 180사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
-//                    // clear text
-//                    ed4.setText("");
-//                    // Focus on ed4
-//                    ed4.requestFocus();
-//                } else if (!ValidationCheck.checkMinute(ed5.getText().toString())) {
-//                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "W Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
-//                    // clear text
-//                    ed5.setText("");
-//                    // Focus on ed5
-//                    ed5.requestFocus();
-//                } else if (!ValidationCheck.checkSecond(ed6.getText().toString())) {
-//                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "W Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
-//                    // clear text
-//                    ed6.setText("");
-//                    // Focus on ed6
-//                    ed6.requestFocus();
-//                }
-//                else {
-//                    double whereTolatitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed1.getText().toString()), Integer.parseInt(ed2.getText().toString())
-//                            , Double.parseDouble(ed3.getText().toString()), latPicker.getText().toString());
-//                    double whereTolongitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed4.getText().toString()), Integer.parseInt(ed5.getText().toString())
-//                            , Double.parseDouble(ed6.getText().toString()), longPicker.getText().toString());
+                if (!ValidationCheck.checkLatitudeDegree(ed1.getText().toString())) {
+                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Deg의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    // clear text
+                    ed1.setText("");
+                    // Focus on ed1
+                    ed1.requestFocus();
+                } else if (!ValidationCheck.checkMinute(ed2.getText().toString())) {
+                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    // clear text
+                    ed2.setText("");
+                    // Focus on ed2
+                    ed2.requestFocus();
+                } else if (!ValidationCheck.checkSecond(ed3.getText().toString())) {
+                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    // clear text
+                    ed3.setText("");
+                    // Focus on ed3
+                    ed3.requestFocus();
+                } else if (!ValidationCheck.checkLongitudeDegree(ed4.getText().toString())) {
+                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "W Deg의 경우 0 ~ 180사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    // clear text
+                    ed4.setText("");
+                    // Focus on ed4
+                    ed4.requestFocus();
+                } else if (!ValidationCheck.checkMinute(ed5.getText().toString())) {
+                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "W Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    // clear text
+                    ed5.setText("");
+                    // Focus on ed5
+                    ed5.requestFocus();
+                } else if (!ValidationCheck.checkSecond(ed6.getText().toString())) {
+                    AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "W Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    // clear text
+                    ed6.setText("");
+                    // Focus on ed6
+                    ed6.requestFocus();
+                }
+                else {
+                    double whereTolatitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed1.getText().toString()), Integer.parseInt(ed2.getText().toString())
+                            , Double.parseDouble(ed3.getText().toString()), latPicker.getText().toString());
+                    double whereTolongitude = EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(ed4.getText().toString()), Integer.parseInt(ed5.getText().toString())
+                            , Double.parseDouble(ed6.getText().toString()), longPicker.getText().toString());
 
                     // TEST
-                    double whereTolatitude = 37.5400377;
-                    double whereTolongitude = 126.8899627;
+//                    double whereTolatitude = 37.5400377;
+//                    double whereTolongitude = 126.8899627;
 
                     LOG.d(TAG, "lat1: " + whereTolatitude + ", long1: " + whereTolongitude);
                     double distance = Math.round(EarthDegreeConverter.distance(gpsLatitude, gpsLongitude, whereTolatitude, whereTolongitude) * 1000);
                     distanceView.setText("distance (km): " + (double) (distance / 1000));
 
                     LOG.d(TAG, "Angle : " + EarthDegreeConverter.getAngle(gpsLatitude, gpsLongitude, whereTolatitude, whereTolongitude));
-//                }
+                }
                 break;
             case R.id.latitude_view:
                 if (latPicker.getText().toString().equals("N")) {
