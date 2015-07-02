@@ -58,7 +58,7 @@ public class ValidationCheckTest {
     @org.junit.Test
     public void checkSecondTest(){
         Assert.assertTrue(ValidationCheck.checkSecond("39"));
-        Assert.assertTrue(ValidationCheck.checkSecond("10"));
+        Assert.assertTrue(ValidationCheck.checkSecond("10.39"));
         Assert.assertTrue(ValidationCheck.checkSecond("59"));
 
         Assert.assertFalse(ValidationCheck.checkSecond("60"));

@@ -27,9 +27,18 @@ public class EarthDegreeConverter {
          * @param min
          * @param sec it can be numeric number
          */
-        public static synchronized double DMStoDD(int deg, int min, double sec) {
+        public static synchronized double DMStoDD(int deg, int min, double sec, String type) {
 
-            return DMmtoDD(DMStoDMm(deg, min, sec));
+            if(type.equals("N") || type.equals("E")) {
+
+                return DMmtoDD(DMStoDMm(deg, min, sec));
+            }
+            else if(type.equals("S") || type.equals("W")){
+                return DMmtoDD(DMStoDMm(-deg, min, sec));
+            }
+            else{
+                return 0.0f;
+            }
         }
 
         /**
@@ -113,5 +122,41 @@ public class EarthDegreeConverter {
         public String toString() {
             return Degree + " " + Minute + " " + Second;
         }
+    }
+
+    /**
+     * Calculate between two points
+     * @param latitude1
+     * @param longitude1
+     * @param latitude2
+     * @param longitude2
+     * @return
+     */
+    public static double distance(double latitude1, double longitude1, double latitude2, double longitude2){
+
+        final int R = 6371;; // Radius of the earth ( km )
+
+        double lat1 = Math.toRadians(latitude1);
+        double lat2 = Math.toRadians(latitude2);
+
+        double latDistance = Math.toRadians(latitude2 - latitude1);
+        double longDistance = Math.toRadians(longitude2 - longitude1);
+
+        double result = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(longDistance / 2) * Math.sin(longDistance / 2);
+
+        double result2 = 2 * Math.atan2(Math.sqrt(result), Math.sqrt(1-result));
+
+        return R * result2;
+    }
+
+
+    /**
+     * Get angle between two points
+     * @return
+     */
+    public static double getAngle(double current_lat, double current_lon, double des_lat, double des_lon){
+
+
+        return 0.0f;
     }
 }

@@ -2,6 +2,8 @@ package danielworld.compassproject;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import danielworld.compassproject.customView.MainView;
 import danielworld.compassproject.customView.TopView;
@@ -15,6 +17,15 @@ public class MainActivity extends Activity {
     private final String TAG = getClass().getSimpleName();
     private final Logger LOG = Logger.getInstance();
 
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch(msg.what){
+
+            }
+        }
+    };
 
     private TopView tView;
     private MainView mView;
@@ -34,6 +45,8 @@ public class MainActivity extends Activity {
         tView = (TopView) findViewById(R.id.top_view);
         mView = (MainView) findViewById(R.id.main_view);
 
+        tView.setHandler(mHandler);
+
         gps = new GPSTracker(this);
 
     }
@@ -48,13 +61,12 @@ public class MainActivity extends Activity {
         gps.getLocation();
 
         if (gps.canGetLocation()) {
-            tView.setText("Latitude N:" + gps.getLatitude()
-                    + "\n" + "Longitude W:" + gps.getLongitude());
-            LOG.d(TAG, "latitude:" + gps.getLatitude());
-            LOG.d(TAG, "longitude:" + gps.getLongitude());
 
-            LOG.d(TAG, "DNS to DD:" + EarthDegreeConverter.DMStoDDclass.DMStoDD(-83, 58, 58));
-            LOG.d(TAG, "DD to DNS:" + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(EarthDegreeConverter.DMStoDDclass.DMStoDD(-83, 58, 58)).toString());
+            tView.setText(gps.getLatitude(), gps.getLongitude());
+            tView.setGPSLocation(gps.getLatitude(), gps.getLongitude());
+
+            LOG.d(TAG, "gps latitude: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLatitude()));
+            LOG.d(TAG, "gps longitude: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLongitude()));
 
         }
 

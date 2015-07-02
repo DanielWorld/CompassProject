@@ -11,38 +11,12 @@ import java.util.regex.Pattern;
 public class ValidationCheck {
 
 
-    private static final String LONGITUDE_PATTERN = "^[0-9-]{1,3}$";
-    private static final String LATITUDE_PATTERN = "^[0-9-]{1,4}$";
+    private static final String LATITUDE_PATTERN = "^[0-9]{1,2}$";
+    private static final String LONGITUDE_PATTERN = "^[0-9]{1,3}$";
 
     private static final String MINUTE_PATTERN = "^[0-9]{1,2}$";
-    private static final String SECOND_PATTERN = "^[0-9]{1,2}$";
+    private static final String SECOND_PATTERN = "^[0-9.]{1,5}$";
 
-
-    /**
-     * Check Longitude degree
-     * @param degree
-     * @return
-     */
-    public static boolean checkLongitudeDegree(String degree){
-
-        Pattern pattern = Pattern.compile(LONGITUDE_PATTERN);
-
-        if(pattern.matcher(degree).matches()){
-            try{
-                int deg = Integer.parseInt(degree);
-
-                if(deg >= -90 && deg <= 90){
-                    return true;
-                }
-                return false;
-
-            }catch (Exception e){
-                return false;
-            }
-        }else{
-            return false;
-        }
-    }
 
     /**
      * Check Latitude degree
@@ -57,7 +31,7 @@ public class ValidationCheck {
             try{
                 int deg = Integer.parseInt(degree);
 
-                if(deg >= -180 && deg <= 180){
+                if(deg >= 0 && deg <= 90){
                     return true;
                 }
                 return false;
@@ -69,6 +43,31 @@ public class ValidationCheck {
         }
     }
 
+    /**
+     * Check Longitude degree
+     * @param degree
+     * @return
+     */
+    public static boolean checkLongitudeDegree(String degree){
+
+        Pattern pattern = Pattern.compile(LONGITUDE_PATTERN);
+
+        if(pattern.matcher(degree).matches()){
+            try{
+                int deg = Integer.parseInt(degree);
+
+                if(deg >= 0 && deg <= 180){
+                    return true;
+                }
+                return false;
+
+            }catch (Exception e){
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 
     public static boolean checkMinute(String minute){
         Pattern pattern = Pattern.compile(MINUTE_PATTERN);
@@ -77,7 +76,7 @@ public class ValidationCheck {
             try{
                 int deg = Integer.parseInt(minute);
 
-                if(deg >= 00 && deg < 60){
+                if(deg >= 0 && deg < 60){
                     return true;
                 }
                 return false;
@@ -94,9 +93,9 @@ public class ValidationCheck {
 
         if(pattern.matcher(second).matches()){
             try{
-                int deg = Integer.parseInt(second);
+                double deg = Double.parseDouble(second);
 
-                if(deg >= 00 && deg < 60){
+                if(deg >= 0 && deg < 60){
                     return true;
                 }
                 return false;

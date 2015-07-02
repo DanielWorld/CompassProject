@@ -7,7 +7,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:id="@+id/locate_view" />
+        android:id="@+id/latitude_result_view" />
+    <TextView
+        android:layout_below="@+id/latitude_result_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/longitude_result_view" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="distance"
+        android:layout_below="@+id/longitude_result_view"
+        android:id="@+id/distance_view"/>
 
     <LinearLayout
         android:id="@+id/first_layout"
@@ -18,7 +31,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
         <TextView
+            android:id="@+id/latitude_view"
             android:text="N"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -55,9 +70,12 @@
         android:layout_alignParentEnd="true">
 
         <TextView
-            android:text="Y"
+            android:id="@+id/longitude_view"
+            android:text="E"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
 
         <EditText
             android:layout_width="wrap_content"
