@@ -2,6 +2,13 @@ package danielworld.compassproject.customView;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,6 +25,8 @@ import android.widget.Toast;
 
 import danielworld.compassproject.R;
 import danielworld.compassproject.util.Logger;
+import danielworld.compassproject.util.ResizeImageView;
+import danielworld.compassproject.util.ResolutionUtil;
 
 /**
  * Copyright (C) 2014-2015 Daniel Park, op7773hons@gmail.com
@@ -47,7 +56,7 @@ public class MainView extends RelativeLayout implements SensorEventListener {
     private int mCount2;
     private int mCount3;
 
-    ImageView compassView;
+    ImageView compassView, canvasView;
 
     public MainView(Context context) {
         super(context);
@@ -78,6 +87,35 @@ public class MainView extends RelativeLayout implements SensorEventListener {
         View v = LayoutInflater.from(context).inflate(R.layout.view_main, null);
 
         compassView = (ImageView) v.findViewById(R.id.compass_view);
+        canvasView = (ImageView) v.findViewById(R.id.canvas_view);
+
+        // Resize canvasView
+        ResizeImageView.resizeImageView(canvasView, ResolutionUtil.displayWidth(context), ResolutionUtil.displayWidth(context));
+
+        Bitmap bitmap = Bitmap.createBitmap(ResolutionUtil.displayWidth(context), ResolutionUtil.displayHeight(context), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        // Draw transparent screen
+        Paint transPainter = new Paint();
+        transPainter.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), transPainter);
+
+        Paint drawPaint = new Paint();
+        drawPaint.reset();
+        drawPaint.setFlags(Paint.DITHER_FLAG);
+        drawPaint.setAntiAlias(true);
+        drawPaint.setSubpixelText(true);
+        drawPaint.setColor(Color.GREEN);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        drawPaint.setStrokeWidth(10);
+        canvas.drawLines(new float[]{bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2, 0}, drawPaint);
+
+        canvasView.setImageBitmap(bitmap);
+
+        // invoke canvasView
+        canvasView.invalidate();
 
         addView(v);
     }
@@ -174,6 +212,10 @@ public class MainView extends RelativeLayout implements SensorEventListener {
                 ra.setFillAfter(true);
 
                 compassView.startAnimation(ra);
+                // 15.07.02 added canvas view
+                canvasView.startAnimation(ra);
+
+
                 mCurrentDegree = -azimuthInDegress;
 
                 mCount3 = 0;
