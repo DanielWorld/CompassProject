@@ -1,7 +1,10 @@
 package danielworld.compassproject.util;
 
 /**
- * Latitude / Longitude conversion
+ * Latitude / Longitude conversion <br>
+ *
+ * Latitude : (-90 ~ +90) :::  Longitude (-180 ~ +180)
+ *
  * <br><br>
  * Copyright (C) 2014-2015 Daniel Park, op7773hons@gmail.com
  * <p>
@@ -10,41 +13,105 @@ package danielworld.compassproject.util;
  */
 public class EarthDegreeConverter {
 
-    private static int Degree;
-    private static double Minute;
-    private static double Second;
-
     /**
-     * Convert DMS to DD
-     * @param deg
-     * @param min
-     * @param sec it can be numeric number
+     * Convert DMS to D.d format class
      */
-    public static double DMStoDD(int deg, int min, double sec){
+    public static class DMStoDDclass {
 
-        return DMmtoDD(DMStoDMm(deg, min, sec));
+        private static int Degree;
+
+        /**
+         * Convert DMS to DD
+         *
+         * @param deg
+         * @param min
+         * @param sec it can be numeric number
+         */
+        public static synchronized double DMStoDD(int deg, int min, double sec) {
+
+            return DMmtoDD(DMStoDMm(deg, min, sec));
+        }
+
+        /**
+         * Convert DMS to DMm
+         * <br>
+         * Save Degree and return Minutes.m
+         *
+         * @param deg degree
+         * @param min minute
+         * @param sec second
+         * @return
+         */
+        private static double DMStoDMm(int deg, int min, double sec) {
+            Degree = deg;
+            return min + (sec / 60);
+        }
+
+        /**
+         * Convert DMm to DD
+         *
+         * @param Mm
+         * @return
+         */
+        private static double DMmtoDD(double Mm) {
+            if(Degree > 0){
+                return Degree + (Mm / 60);
+            }
+            else{
+                return Degree - (Mm / 60);
+            }
+
+        }
     }
 
     /**
-     * Convert DMS to DMm
-     * <br>
-     * Save Degree and return Minutes.m
-     * @param deg degree
-     * @param min minute
-     * @param sec second
-     * @return
+     * Convert D.d to DMS format class
      */
-    private static double DMStoDMm(int deg, int min, double sec){
-        Degree = deg;
-        return min + (sec / 60);
-    }
+    public static class DDtoDMSclass {
 
-    /**
-     * Convert DMm to DD
-     * @param Mm
-     * @return
-     */
-    private static double DMmtoDD(double Mm){
-        return Degree + (Mm / 60);
+        public static synchronized DDtoDMSclass DDtoDMS(double dd){
+            DMmtoDMS(DDtoDMm(dd));
+
+            return new DDtoDMSclass();
+        }
+
+        private static void DMmtoDMS(double Mm){
+            Minute = (int) Math.abs(Mm);
+            Second = (Mm - Minute) * 60;
+        }
+
+        private static double DDtoDMm(double dd){
+            Degree = (int) Math.abs(dd);
+
+            double Mm = 0.0f;
+            if(dd < 0){
+                Mm = -(dd + Degree) * 60;
+            }
+            else{
+                Mm = (dd - Degree) * 60;
+            }
+            return Mm;
+        }
+
+        private static int Degree;
+        private static int Minute;
+        private static double Second;
+
+        public int getDegree() {
+            return Degree;
+        }
+
+        public double getMinute() {
+            return Minute;
+        }
+
+        public double getSecond() {
+            return Second;
+        }
+
+        @Override
+        public String toString() {
+            return Degree + " " + Minute + " " + Second;
+        }
     }
 }

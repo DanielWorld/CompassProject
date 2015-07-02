@@ -48,12 +48,13 @@ public class MainActivity extends Activity {
         gps.getLocation();
 
         if (gps.canGetLocation()) {
-            tView.setText("Latitude:" + gps.getLatitude()
-                    + "\n" + "Longitude:" + gps.getLongitude());
+            tView.setText("Latitude N:" + gps.getLatitude()
+                    + "\n" + "Longitude W:" + gps.getLongitude());
             LOG.d(TAG, "latitude:" + gps.getLatitude());
             LOG.d(TAG, "longitude:" + gps.getLongitude());
 
-            LOG.d(TAG, "DNS to DD:" + EarthDegreeConverter.DMStoDD(37, 52, 10));
+            LOG.d(TAG, "DNS to DD:" + EarthDegreeConverter.DMStoDDclass.DMStoDD(-83, 58, 58));
+            LOG.d(TAG, "DD to DNS:" + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(EarthDegreeConverter.DMStoDDclass.DMStoDD(-83, 58, 58)).toString());
 
         }
 
