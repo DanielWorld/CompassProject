@@ -55,13 +55,15 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="32dp"
+                android:id="@+id/latitude_type_dms"
+                android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:text="N"
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/latitude_deg_dms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -69,6 +71,7 @@
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/latitude_min_dms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -76,6 +79,7 @@
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/latitude_sec_dms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -90,13 +94,15 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="32dp"
+                android:id="@+id/longitude_type_dms"
+                android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:text="E"
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/longitude_deg_dms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -104,6 +110,7 @@
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/longitude_min_dms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -111,6 +118,7 @@
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/longitude_sec_dms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -141,13 +149,15 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="32dp"
+                android:id="@+id/latitude_type_dd"
+                android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:text="N"
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/latitude_degree_dd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -162,13 +172,15 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="32dp"
+                android:id="@+id/longitude_type_dd"
+                android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:text="E"
                 android:textSize="13sp" />
 
             <EditText
+                android:id="@+id/longitude_degree_dd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"

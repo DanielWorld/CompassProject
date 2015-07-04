@@ -1,4 +1,4 @@
-package danielworld.compassproject.unittest.activities;
+package danielworld.compassproject.unittest.instrumentationTest.activities;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -74,8 +74,8 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2<Setti
         assertEquals(View.VISIBLE, ddLayout.getVisibility());
 
         MainActivity aActivity = (MainActivity) mActivityMonitor.waitForActivityWithTimeout(20000);
-
-//        assertNotNull("MainActivity is null", aActivity);
+//
+        assertNotNull("MainActivity is null", aActivity);
 
         // Remove the Activity Monitor
         mInstrumentation.removeMonitor(mActivityMonitor);
