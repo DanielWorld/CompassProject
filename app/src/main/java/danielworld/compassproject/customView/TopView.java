@@ -23,9 +23,9 @@ import danielworld.compassproject.util.dialog.AlertDialogUtil;
 
 
 /**
- * Copyright (C) 2014-2015 Daniel Park, op7773hons@gmail.com
- * <p/>
- * This file is part of CompassSensor (https://github.com/NamgyuWorld)
+ * Copyright (C) 2014-2015 Daniel Park. op7773hons@gmail.com
+ * </p>
+ * This file is part of CompassProject (https://github.com/DanielWorld)
  * Created by danielpark on 2015. 7. 1..
  */
 public class TopView extends RelativeLayout implements View.OnClickListener, DialogInterface.OnClickListener {

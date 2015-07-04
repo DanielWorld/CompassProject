@@ -8,7 +8,7 @@ import danielworld.compassproject.preference.CompassPreference;
 /**
  * Created by danielpark on 2015-07-04.
  */
-public class SharedPreferencesTest extends AndroidTestCase{
+public class CompassPreferenceTest extends AndroidTestCase{
 
     Context mContext;
 

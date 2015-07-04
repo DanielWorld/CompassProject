@@ -9,6 +9,9 @@ import danielworld.compassproject.util.StringUtil;
 /**
  * Show AlertDialog
  * <br><br>
+ * Copyright (C) 2014-2015 Daniel Park. op7773hons@gmail.com
+ * </p>
+ * This file is part of CompassProject (https://github.com/DanielWorld)
  * Created by danielpark on 5/29/15.
  */
 public class AlertDialogUtil {

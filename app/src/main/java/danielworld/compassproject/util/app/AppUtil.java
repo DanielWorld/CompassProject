@@ -26,6 +26,9 @@ import danielworld.compassproject.util.StringUtil;
 /**
  * The Utilities of Application
  * <br><br>
+ * Copyright (C) 2014-2015 Daniel Park. op7773hons@gmail.com
+ * </p>
+ * This file is part of CompassProject (https://github.com/DanielWorld)
  * Created by Daniel Park on 2015-05-28.
  */
 public class AppUtil {

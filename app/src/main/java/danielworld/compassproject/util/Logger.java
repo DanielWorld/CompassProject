@@ -5,6 +5,9 @@ import android.util.Log;
 /**
  * The package of Log.v / Log.d / Log.i / Log.w / Log.e
  * <br><br>
+ * Copyright (C) 2014-2015 Daniel Park. op7773hons@gmail.com
+ * </p>
+ * This file is part of CompassProject (https://github.com/DanielWorld)
  * Created by danielpark on 5/29/15.
  */
 public class Logger {
