@@ -1,10 +1,11 @@
-package danielworld.compassproject;
+package danielworld.compassproject.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import danielworld.compassproject.R;
 import danielworld.compassproject.customView.MainView;
 import danielworld.compassproject.customView.TopView;
 import danielworld.compassproject.service.GPSTracker;
