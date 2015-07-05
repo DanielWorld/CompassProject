@@ -1,6 +1,7 @@
 package danielworld.compassproject.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,13 +19,20 @@ public class MainActivity extends Activity {
     private final String TAG = getClass().getSimpleName();
     private final Logger LOG = Logger.getInstance();
 
-    private Handler mHandler = new Handler(){
+    public final static int GO_TO_SETTINGS_ACTIVITY = 22342;
+    public final static int COMPLETE_SEARCHING_GPS = GO_TO_SETTINGS_ACTIVITY + 1;
+
+    public Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch(msg.what){
-                case 1182:
-                    mView.setBearingDirection(msg.obj);
+                case GO_TO_SETTINGS_ACTIVITY:
+                    Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                    break;
+                case COMPLETE_SEARCHING_GPS:
+
                     break;
             }
         }
@@ -32,7 +40,6 @@ public class MainActivity extends Activity {
 
     private TopView tView;
     private MainView mView;
-    GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +56,13 @@ public class MainActivity extends Activity {
         mView = (MainView) findViewById(R.id.main_view);
 
         tView.setHandler(mHandler);
-
-        gps = new GPSTracker(this);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         if (mView != null)
             mView.onResume();
-
-        gps.getLocation();
-
-        if (gps.canGetLocation()) {
-
-            tView.setText(gps.getLatitude(), gps.getLongitude());
-            tView.setGPSLocation(gps.getLatitude(), gps.getLongitude());
-
-            LOG.d(TAG, "gps latitude: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLatitude()));
-            LOG.d(TAG, "gps longitude: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLongitude()));
-
-        }
-
     }
 
     @Override
@@ -80,12 +70,8 @@ public class MainActivity extends Activity {
         // Ideally a game should implement onResume() and onPause()
         // to take appropriate action when the activity looses focus
         super.onPause();
-
         if (mView != null)
             mView.onPause();
-
-        gps.stopUsingGPS();
-
     }
 
 }
