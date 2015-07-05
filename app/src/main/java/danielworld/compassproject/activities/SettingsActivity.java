@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import danielworld.compassproject.R;
 import danielworld.compassproject.preference.CompassPreference;
+import danielworld.compassproject.util.EarthDegreeConverter;
 import danielworld.compassproject.util.ValidationCheck;
 import danielworld.compassproject.util.dialog.AlertDialogUtil;
 
@@ -84,6 +85,31 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
         lonDegDD = (EditText) findViewById(R.id.longitude_degree_dd);
 
         saveBtn = (Button) findViewById(R.id.save_button); // dms or dd input save button
+
+        // Get data from CompassPreferences
+        bringDMSdataFromPref();
+        bringDDdDataFromPref();
+    }
+
+    private void bringDMSdataFromPref(){
+        dmsLatType.setText(mPref.getDMSLatType());
+        dmsLonType.setText(mPref.getDMSLonType());
+
+        latDegDms.setText(mPref.getDMSdegLat());
+        latMinDms.setText(mPref.getDMSminLat());
+        latSecDms.setText(mPref.getDMSsecLat());
+
+        lonDegDms.setText(mPref.getDMSdegLon());
+        lonMinDms.setText(mPref.getDMSminLon());
+        lonSecDms.setText(mPref.getDMSsecLon());
+    }
+
+    private void bringDDdDataFromPref(){
+        ddLatType.setText(mPref.getDDdLatType());
+        ddLonType.setText(mPref.getDDdLonType());
+
+        latDegDD.setText(mPref.getDDdLat());
+        lonDegDD.setText(mPref.getDDdLon());
     }
 
     @Override
@@ -93,9 +119,13 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
                 if (checkedId == R.id.dms_rbtn) {
                     dmsLayout.setVisibility(View.VISIBLE);
                     ddLayout.setVisibility(View.GONE);
+
+                    bringDMSdataFromPref();
                 } else if (checkedId == R.id.dd_rbtn) {
                     dmsLayout.setVisibility(View.GONE);
                     ddLayout.setVisibility(View.VISIBLE);
+
+                    bringDDdDataFromPref();
                 }
                 break;
         }
@@ -108,44 +138,74 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
                 if(dmsRbtn.isChecked()){    // dms radio button is clicked
                     // Check validation
                     if(!ValidationCheck.checkLatitudeDegree(latDegDms.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Deg의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "Latitude Deg의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         latDegDms.setText("");  // clear text
                         latDegDms.requestFocus();   // focus
-                    } else if(!ValidationCheck.checkLatitudeDegree(latMinDms.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    } else if(!ValidationCheck.checkMinute(latMinDms.getText().toString())){
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "Latitude Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         latMinDms.setText("");  // clear text
                         latMinDms.requestFocus();   // focus
-                    } else if(!ValidationCheck.checkLatitudeDegree(latSecDms.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    } else if(!ValidationCheck.checkSecond(latSecDms.getText().toString())){
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "Latitude Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         latSecDms.setText("");  // clear text
                         latSecDms.requestFocus();   // focus
-                    } else if(!ValidationCheck.checkLatitudeDegree(lonDegDms.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Deg의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    } else if(!ValidationCheck.checkLongitudeDegree(lonDegDms.getText().toString())){
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "Longitude Deg의 경우 0 ~ 180사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         lonDegDms.setText("");  // clear text
                         lonDegDms.requestFocus();   // focus
-                    } else if(!ValidationCheck.checkLatitudeDegree(lonMinDms.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    } else if(!ValidationCheck.checkMinute(lonMinDms.getText().toString())){
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "Longitude Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         lonMinDms.setText("");  // clear text
                         lonMinDms.requestFocus();   // focus
-                    } else if(!ValidationCheck.checkLatitudeDegree(lonSecDms.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    } else if(!ValidationCheck.checkSecond(lonSecDms.getText().toString())){
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "Longitude Sec의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         lonSecDms.setText("");  // clear text
                         lonSecDms.requestFocus();   // focus
                     } else {
-                        // Test is passed then save current DMS
+                        // Test is passed then save current DMS and convert it to DD.dddddd version and save it
+                        mPref.setDMSLatType(dmsLatType.getText().toString());
+                        mPref.setDMSdegLat(latDegDms.getText().toString());
+                        mPref.setDMSminLat(latMinDms.getText().toString());
+                        mPref.setDMSsecLat(latSecDms.getText().toString());
+
+                        mPref.setDMSLonType(dmsLonType.getText().toString());
+                        mPref.setDMSdegLon(lonDegDms.getText().toString());
+                        mPref.setDMSminLon(lonMinDms.getText().toString());
+                        mPref.setDMSsecLon(lonSecDms.getText().toString());
+
+                        mPref.setDDdLatType(mPref.getDMSLatType());
+                        mPref.setDDdLat(String.valueOf(EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(mPref.getDMSdegLat()), Integer.parseInt(mPref.getDMSminLat()), Double.parseDouble(mPref.getDMSsecLat()), mPref.getDMSLatType())));
+
+                        mPref.setDDdLonType(mPref.getDMSLonType());
+                        mPref.setDDdLon(String.valueOf(EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(mPref.getDMSdegLon()), Integer.parseInt(mPref.getDMSminLon()), Double.parseDouble(mPref.getDMSsecLon()), mPref.getDMSLonType())));
                     }
                 }
-                else if(ddRbtn.isChecked()){    // dd radio button is clicked
-                    if(!ValidationCheck.checkLatitudeDegree(latDegDD.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Deg의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                else if(ddRbtn.isChecked()) {    // dd radio button is clicked
+                    if(!ValidationCheck.checkLatitudeDDd(latDegDD.getText().toString())){
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "해당 값의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         latDegDD.setText("");  // clear text
                         latDegDD.requestFocus();   // focus
-                    } else if(!ValidationCheck.checkLatitudeDegree(lonDegDD.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "N Min의 경우 0 ~ 59사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                    } else if(!ValidationCheck.checkLongitudeDDd(lonDegDD.getText().toString())){
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "해당 값의 경우 0 ~ 180사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         lonDegDD.setText("");  // clear text
                         lonDegDD.requestFocus();   // focus
                     } else {
-                        // Test is passed then save current DD.dddddd
+                        // Test is passed then save current DD.dddddd and convert it to DMS version and save it
+                        mPref.setDDdLatType(ddLatType.getText().toString());
+                        mPref.setDDdLat(latDegDD.getText().toString());
+
+                        mPref.setDDdLonType(ddLonType.getText().toString());
+                        mPref.setDDdLon(lonDegDD.getText().toString());
+
+                        mPref.setDMSLatType(mPref.getDDdLatType());
+                        mPref.setDMSdegLat(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getDegree()));
+                        mPref.setDMSminLat(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getMinute()));
+                        mPref.setDMSsecLat(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getSecond()));
+
+                        mPref.setDMSLonType(mPref.getDDdLonType());
+                        mPref.setDMSdegLon(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getDegree()));
+                        mPref.setDMSminLon(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getMinute()));
+                        mPref.setDMSsecLon(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getSecond()));
                     }
                 }
 

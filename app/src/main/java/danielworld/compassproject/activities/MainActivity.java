@@ -63,6 +63,9 @@ public class MainActivity extends Activity {
         super.onResume();
         if (mView != null)
             mView.onResume();
+
+        // Get the latest gps location
+        tView.getGPSLocation();
     }
 
     @Override
@@ -72,6 +75,9 @@ public class MainActivity extends Activity {
         super.onPause();
         if (mView != null)
             mView.onPause();
+
+        // Stop using GPS tracking
+        tView.stopUsingGPS();
     }
 
 }

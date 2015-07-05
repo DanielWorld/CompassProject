@@ -6,14 +6,15 @@
 
     <danielworld.compassproject.customView.TopView
         android:id="@+id/top_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 
     <danielworld.compassproject.customView.MainView
         android:layout_below="@+id/top_view"
         android:id="@+id/main_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

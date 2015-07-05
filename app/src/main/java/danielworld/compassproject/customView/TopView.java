@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import danielworld.compassproject.R;
 import danielworld.compassproject.activities.MainActivity;
+import danielworld.compassproject.preference.CompassPreference;
 import danielworld.compassproject.service.GPSTracker;
 import danielworld.compassproject.util.EarthDegreeConverter;
 import danielworld.compassproject.util.Logger;
@@ -33,6 +34,8 @@ public class TopView extends RelativeLayout implements View.OnClickListener {
     static double gpsLatitude;
     static double gpsLongitude;
     GPSTracker gps;
+
+    private CompassPreference mPrefs;
 
     private ImageButton goSettingsBtn, findGPSBtn;
 
@@ -73,6 +76,8 @@ public class TopView extends RelativeLayout implements View.OnClickListener {
         addView(v);
 
         gps = new GPSTracker(context); // Initialize GPS
+
+        mPrefs = new CompassPreference(context);
     }
 
     @Override
@@ -94,10 +99,26 @@ public class TopView extends RelativeLayout implements View.OnClickListener {
             gpsLatitude = gps.getLatitude(); // DD.dddddd format
             gpsLongitude = gps.getLongitude(); // DD.dddddd format
 
-            LOG.d(TAG, "gps latitude in DMS: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLatitude()));
-            LOG.d(TAG, "gps longitude in DMS: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLongitude()));
             LOG.d(TAG, "gps latitude in DD.d: " + gps.getLatitude());
             LOG.d(TAG, "gps longitude in DD.d: " + gps.getLongitude());
+            LOG.d(TAG, "gps latitude in DMS: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLatitude()));
+            LOG.d(TAG, "gps longitude in DMS: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLongitude()));
+
+            double desLat = 0.0f, desLon = 0.0f; // destination latitude, longitude in DDd format
+//            if(mPrefs.getDDdLatType().equals("N")){
+                desLat = Double.parseDouble(mPrefs.getDDdLat());
+//            }else if(mPrefs.getDDdLatType().equals("S")){
+//                desLat = -Double.parseDouble(mPrefs.getDDdLat());
+//            }
+
+//            if(mPrefs.getDDdLonType().equals("E")){
+                desLon = Double.parseDouble(mPrefs.getDDdLon());
+//            }else if(mPrefs.getDDdLonType().equals("W")){
+//                desLon = -Double.parseDouble(mPrefs.getDDdLon());
+//            }
+
+            LOG.d(TAG, "destination gps : " + desLat + " / " + desLon);
+            LOG.d(TAG, "The distance between destination to current place (km) : " + EarthDegreeConverter.distance(gps.getLatitude(), gps.getLongitude(),desLat, desLon));
         }
     }
     /* Stop using gps tracker */

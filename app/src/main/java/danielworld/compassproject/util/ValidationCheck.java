@@ -1,5 +1,7 @@
 package danielworld.compassproject.util;
 
+import android.widget.EditText;
+
 import java.util.regex.Pattern;
 
 /**
@@ -16,6 +18,8 @@ public class ValidationCheck {
 
     private static final String MINUTE_PATTERN = "^[0-9]{1,2}$";
     private static final String SECOND_PATTERN = "^[0-9.]{1,5}$";
+
+    private static final String DDd_PATTERN = "^[0-9.]{1,8}$";
 
 
     /**
@@ -103,6 +107,46 @@ public class ValidationCheck {
                 return false;
             }
         }else{
+            return false;
+        }
+    }
+
+    public static boolean checkLatitudeDDd(String input){
+        // Latitude is -90 ~ 90 but you're not going to allow -90 I guess...
+        Pattern pattern = Pattern.compile(DDd_PATTERN);
+
+        if(pattern.matcher(input).matches()){
+            try{
+                double ddd = Double.parseDouble(input);
+                if(Math.floor(ddd) < 0 || Math.floor(ddd) > 90)
+                    return false;
+
+                return true;
+            }catch (Exception e){
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static boolean checkLongitudeDDd(String input){
+        // Latitude is -90 ~ 90 but you're not going to allow -90 I guess...
+        Pattern pattern = Pattern.compile(DDd_PATTERN);
+
+        if(pattern.matcher(input).matches()){
+            try{
+                double ddd = Double.parseDouble(input);
+                if(Math.floor(ddd) < 0 || Math.floor(ddd) > 180)
+                    return false;
+
+                return true;
+            }catch (Exception e){
+                return false;
+            }
+        }
+        else{
             return false;
         }
     }
