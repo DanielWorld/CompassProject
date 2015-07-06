@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
 
     public final static int GO_TO_SETTINGS_ACTIVITY = 22342;
     public final static int COMPLETE_SEARCHING_GPS = GO_TO_SETTINGS_ACTIVITY + 1;
+    public final static int COMPLETE_SEARCHING_BEARING = GO_TO_SETTINGS_ACTIVITY + 2;
 
     public Handler mHandler = new Handler(){
         @Override
@@ -33,6 +34,10 @@ public class MainActivity extends Activity {
                     break;
                 case COMPLETE_SEARCHING_GPS:
 
+                    break;
+                case COMPLETE_SEARCHING_BEARING:
+                    if(mView != null)
+                        mView.setBearingDirection(msg.obj);
                     break;
             }
         }
@@ -65,6 +70,7 @@ public class MainActivity extends Activity {
             mView.onResume();
 
         // Get the latest gps location
+        if(tView != null)
         tView.getGPSLocation();
     }
 
@@ -75,8 +81,9 @@ public class MainActivity extends Activity {
         super.onPause();
         if (mView != null)
             mView.onPause();
-
+//
         // Stop using GPS tracking
+        if(tView != null)
         tView.stopUsingGPS();
     }
 

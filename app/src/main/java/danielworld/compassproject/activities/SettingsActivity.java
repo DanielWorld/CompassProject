@@ -51,8 +51,8 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
         rbtnGroup.setOnCheckedChangeListener(this);
         dmsLatType.setOnClickListener(this);
         dmsLonType.setOnClickListener(this);
-        ddLatType.setOnClickListener(this);
-        ddLonType.setOnClickListener(this);
+//        ddLatType.setOnClickListener(this);
+//        ddLonType.setOnClickListener(this);
 
         saveBtn.setOnClickListener(this);
     }
@@ -92,8 +92,8 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
     }
 
     private void bringDMSdataFromPref(){
-        dmsLatType.setText(mPref.getDMSLatType());
-        dmsLonType.setText(mPref.getDMSLonType());
+        dmsLatType.setText(mPref.getDMSLatType() == null ? "N" : mPref.getDMSLatType());
+        dmsLonType.setText(mPref.getDMSLonType() == null ? "E" : mPref.getDMSLonType());
 
         latDegDms.setText(mPref.getDMSdegLat());
         latMinDms.setText(mPref.getDMSminLat());
@@ -105,9 +105,6 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
     }
 
     private void bringDDdDataFromPref(){
-        ddLatType.setText(mPref.getDDdLatType());
-        ddLonType.setText(mPref.getDDdLonType());
-
         latDegDD.setText(mPref.getDDdLat());
         lonDegDD.setText(mPref.getDDdLon());
     }
@@ -173,38 +170,34 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
                         mPref.setDMSminLon(lonMinDms.getText().toString());
                         mPref.setDMSsecLon(lonSecDms.getText().toString());
 
-                        mPref.setDDdLatType(mPref.getDMSLatType());
                         mPref.setDDdLat(String.valueOf(EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(mPref.getDMSdegLat()), Integer.parseInt(mPref.getDMSminLat()), Double.parseDouble(mPref.getDMSsecLat()), mPref.getDMSLatType())));
-
-                        mPref.setDDdLonType(mPref.getDMSLonType());
                         mPref.setDDdLon(String.valueOf(EarthDegreeConverter.DMStoDDclass.DMStoDD(Integer.parseInt(mPref.getDMSdegLon()), Integer.parseInt(mPref.getDMSminLon()), Double.parseDouble(mPref.getDMSsecLon()), mPref.getDMSLonType())));
                     }
                 }
                 else if(ddRbtn.isChecked()) {    // dd radio button is clicked
                     if(!ValidationCheck.checkLatitudeDDd(latDegDD.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "해당 값의 경우 0 ~ 90사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "해당 값의 경우 -90 ~ 90사이, 총 문자열 개수 10 이하의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         latDegDD.setText("");  // clear text
                         latDegDD.requestFocus();   // focus
                     } else if(!ValidationCheck.checkLongitudeDDd(lonDegDD.getText().toString())){
-                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "해당 값의 경우 0 ~ 180사이의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
+                        AlertDialogUtil.showOneButtonDialog(v.getContext(), "에러", "해당 값의 경우 -180 ~ 180사이, 총 문자열 개수 10 이하의 숫자만 받을 수 있습니다.\n재입력해주세요", null, this);
                         lonDegDD.setText("");  // clear text
                         lonDegDD.requestFocus();   // focus
                     } else {
                         // Test is passed then save current DD.dddddd and convert it to DMS version and save it
-                        mPref.setDDdLatType(ddLatType.getText().toString());
                         mPref.setDDdLat(latDegDD.getText().toString());
-
-                        mPref.setDDdLonType(ddLonType.getText().toString());
                         mPref.setDDdLon(lonDegDD.getText().toString());
 
-                        mPref.setDMSLatType(mPref.getDDdLatType());
-                        mPref.setDMSdegLat(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getDegree()));
-                        mPref.setDMSminLat(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getMinute()));
+                        mPref.setDMSLatType(Double.parseDouble(mPref.getDDdLat()) >= 0 ? "N" : "S");
+                        mPref.setDDdLatType(mPref.getDMSLatType());
+                        mPref.setDMSdegLat(String.valueOf(Math.abs(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getDegree())));
+                        mPref.setDMSminLat(String.valueOf((int) EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getMinute()));
                         mPref.setDMSsecLat(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLat())).getSecond()));
 
-                        mPref.setDMSLonType(mPref.getDDdLonType());
-                        mPref.setDMSdegLon(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getDegree()));
-                        mPref.setDMSminLon(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getMinute()));
+                        mPref.setDMSLonType(Double.parseDouble(mPref.getDDdLon()) >=0 ? "E" : "W");
+                        mPref.setDDdLonType(mPref.getDMSLonType());
+                        mPref.setDMSdegLon(String.valueOf(Math.abs(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getDegree())));
+                        mPref.setDMSminLon(String.valueOf((int) EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getMinute()));
                         mPref.setDMSsecLon(String.valueOf(EarthDegreeConverter.DDtoDMSclass.DDtoDMS(Double.parseDouble(mPref.getDDdLon())).getSecond()));
                     }
                 }
@@ -224,20 +217,20 @@ public class SettingsActivity extends Activity implements RadioGroup.OnCheckedCh
                     dmsLonType.setText("E");
                 }
                 break;
-            case R.id.latitude_type_dd:
-                if (ddLatType.getText().equals("N")) {
-                    ddLatType.setText("S");
-                } else {
-                    ddLatType.setText("N");
-                }
-                break;
-            case R.id.longitude_type_dd:
-                if (ddLonType.getText().equals("E")) {
-                    ddLonType.setText("W");
-                } else {
-                    ddLonType.setText("E");
-                }
-                break;
+//            case R.id.latitude_type_dd:
+//                if (ddLatType.getText().equals("N")) {
+//                    ddLatType.setText("S");
+//                } else {
+//                    ddLatType.setText("N");
+//                }
+//                break;
+//            case R.id.longitude_type_dd:
+//                if (ddLonType.getText().equals("E")) {
+//                    ddLonType.setText("W");
+//                } else {
+//                    ddLonType.setText("E");
+//                }
+//                break;
         }
     }
 

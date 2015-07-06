@@ -17,9 +17,9 @@ public class ValidationCheck {
     private static final String LONGITUDE_PATTERN = "^[0-9]{1,3}$";
 
     private static final String MINUTE_PATTERN = "^[0-9]{1,2}$";
-    private static final String SECOND_PATTERN = "^[0-9.]{1,5}$";
+    private static final String SECOND_PATTERN = "^[0-9.]{1,25}$";
 
-    private static final String DDd_PATTERN = "^[0-9.]{1,8}$";
+    private static final String DDd_PATTERN = "^[0-9.-]{1,15}$";
 
 
     /**
@@ -118,10 +118,10 @@ public class ValidationCheck {
         if(pattern.matcher(input).matches()){
             try{
                 double ddd = Double.parseDouble(input);
-                if(Math.floor(ddd) < 0 || Math.floor(ddd) > 90)
-                    return false;
+                if(ddd >= -90 && ddd <= 90)
+                    return true;
 
-                return true;
+                return false;
             }catch (Exception e){
                 return false;
             }
@@ -138,10 +138,10 @@ public class ValidationCheck {
         if(pattern.matcher(input).matches()){
             try{
                 double ddd = Double.parseDouble(input);
-                if(Math.floor(ddd) < 0 || Math.floor(ddd) > 180)
-                    return false;
+                if(ddd >= -180 && ddd <= 180)
+                    return true;
 
-                return true;
+                return false;
             }catch (Exception e){
                 return false;
             }
