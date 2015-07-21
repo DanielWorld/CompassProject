@@ -2,22 +2,23 @@ package danielworld.compassproject.customView;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import com.namgyuworld.utility.Logger;
-import com.namgyuworld.utility.StringUtil;
-
 import danielworld.compassproject.R;
 import danielworld.compassproject.activities.MainActivity;
 import danielworld.compassproject.preference.CompassPreference;
 import danielworld.compassproject.service.GPSTracker;
 import danielworld.compassproject.util.EarthDegreeConverter;
+import danielworld.compassproject.util.Logger;
 
 
 /**
@@ -106,21 +107,32 @@ public class TopView extends RelativeLayout implements View.OnClickListener {
             LOG.d(TAG, "gps longitude in DMS: " + EarthDegreeConverter.DDtoDMSclass.DDtoDMS(gps.getLongitude()));
 
             double desLat = 0.0f, desLon = 0.0f; // destination latitude, longitude in DDd format
-//            if(mPrefs.getDDdLatType().equals("N")){
-            desLat = StringUtil.isNullorEmpty(mPrefs.getDDdLat()) ?  0.0f : Double.parseDouble(mPrefs.getDDdLat());
-
-//            }else if(mPrefs.getDDdLatType().equals("S")){
-//                desLat = -Double.parseDouble(mPrefs.getDDdLat());
-//            }
-
-//            if(mPrefs.getDDdLonType().equals("E")){
-            desLon = StringUtil.isNullorEmpty(mPrefs.getDDdLon()) ? 0.0f : Double.parseDouble(mPrefs.getDDdLon());
-//            }else if(mPrefs.getDDdLonType().equals("W")){
-//                desLon = -Double.parseDouble(mPrefs.getDDdLon());
-//            }
+            try {
+                desLat = Double.parseDouble(mPrefs.getDDdLat());
+                desLon = Double.parseDouble(mPrefs.getDDdLon());
+            }catch (Exception e){
+            }
 
             LOG.d(TAG, "destination gps : " + desLat + " / " + desLon);
-            LOG.d(TAG, "The distance between destination to current place (km) : " + EarthDegreeConverter.distance(gps.getLatitude(), gps.getLongitude(),desLat, desLon));
+            LOG.d(TAG, "The distance between destination to current place (km) : " + EarthDegreeConverter.distance(gps.getLatitude(), gps.getLongitude(), desLat, desLon));
+
+            // TEST
+            Location locationA= new Location("Point A");
+            locationA.setLatitude(gps.getLatitude());
+            locationA.setLongitude(gps.getLongitude());
+            Location locationB = new Location("Point B");
+            locationB.setLatitude(desLat);
+            locationB.setLongitude(desLon);
+            LOG.d(TAG, "Another distance : " + locationA.distanceTo(locationB));
+
+            // North is 0 degree and East is +90 degree, which means direction goes to right way.
+            LOG.d(TAG, "InitialBearing: " + locationA.bearingTo(locationB));
+
+            Message msg = new Message();
+            msg.what = MainActivity.COMPLETE_SEARCHING_BEARING;
+            msg.obj = locationA.bearingTo(locationB);
+            mHandler.sendMessage(msg);
+
         }
     }
     /* Stop using gps tracker */

@@ -174,8 +174,8 @@ public class MainView extends RelativeLayout implements SensorEventListener {
                             "  a_z: " + (aData[2]));
 
                     // http://developer.android.com/reference/android/hardware/SensorEvent.html
-                    // According to this reference, when the device is sitting on a table, Acceleration minus Gz on the z-axis is from 9.30 ~ 9.85
-                    if (aData[2] < 9.30 || aData[2] > 9.90) {
+                    // According to this reference, when the device is sitting on a table, Acceleration minus Gz on the z-axis is from 9.30 ~ 9.85 (It's not accurate!)
+                    if (aData[2] < 9.30 || aData[2] > 10.30) {
                         Toast.makeText(mContext, "스마트폰을 수평으로 놔주세요!", Toast.LENGTH_SHORT).show();
                     }
                     mCount = 0;

@@ -150,10 +150,10 @@
 
             <Button
                 android:id="@+id/latitude_type_dd"
-                android:layout_width="35dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="N"
+                android:text="N(+)/S(-)"
                 android:textSize="13sp" />
 
             <EditText
@@ -173,10 +173,10 @@
 
             <Button
                 android:id="@+id/longitude_type_dd"
-                android:layout_width="35dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="E"
+                android:text="E{+)/W(-)"
                 android:textSize="13sp" />
 
             <EditText
