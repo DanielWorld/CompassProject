@@ -2,7 +2,6 @@ package danielworld.compassproject.customView;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -11,12 +10,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import com.namgyuworld.utility.Logger;
+import com.namgyuworld.utility.StringUtil;
+
 import danielworld.compassproject.R;
 import danielworld.compassproject.activities.MainActivity;
 import danielworld.compassproject.preference.CompassPreference;
 import danielworld.compassproject.service.GPSTracker;
 import danielworld.compassproject.util.EarthDegreeConverter;
-import danielworld.compassproject.util.Logger;
 
 
 /**
@@ -106,13 +107,14 @@ public class TopView extends RelativeLayout implements View.OnClickListener {
 
             double desLat = 0.0f, desLon = 0.0f; // destination latitude, longitude in DDd format
 //            if(mPrefs.getDDdLatType().equals("N")){
-                desLat = Double.parseDouble(mPrefs.getDDdLat());
+            desLat = StringUtil.isNullorEmpty(mPrefs.getDDdLat()) ?  0.0f : Double.parseDouble(mPrefs.getDDdLat());
+
 //            }else if(mPrefs.getDDdLatType().equals("S")){
 //                desLat = -Double.parseDouble(mPrefs.getDDdLat());
 //            }
 
 //            if(mPrefs.getDDdLonType().equals("E")){
-                desLon = Double.parseDouble(mPrefs.getDDdLon());
+            desLon = StringUtil.isNullorEmpty(mPrefs.getDDdLon()) ? 0.0f : Double.parseDouble(mPrefs.getDDdLon());
 //            }else if(mPrefs.getDDdLonType().equals("W")){
 //                desLon = -Double.parseDouble(mPrefs.getDDdLon());
 //            }

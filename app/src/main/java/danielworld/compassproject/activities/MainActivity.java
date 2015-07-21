@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
+
+import com.namgyuworld.utility.Logger;
+import com.namgyuworld.utility.app.AppUtil;
 
 import danielworld.compassproject.R;
 import danielworld.compassproject.customView.MainView;
 import danielworld.compassproject.customView.TopView;
-import danielworld.compassproject.service.GPSTracker;
-import danielworld.compassproject.util.EarthDegreeConverter;
-import danielworld.compassproject.util.Logger;
-import danielworld.compassproject.util.app.AppUtil;
 
 public class MainActivity extends Activity {
 
@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
         } else {
             LOG.disableLog();
         }
-
+//
         tView = (TopView) findViewById(R.id.top_view);
         mView = (MainView) findViewById(R.id.main_view);
 

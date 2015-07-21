@@ -3,7 +3,6 @@ package danielworld.compassproject.customView;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -23,8 +22,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.namgyuworld.utility.Logger;
+
 import danielworld.compassproject.R;
-import danielworld.compassproject.util.Logger;
 import danielworld.compassproject.util.ResizeImageView;
 import danielworld.compassproject.util.ResolutionUtil;
 

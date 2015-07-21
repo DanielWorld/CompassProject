@@ -12,7 +12,8 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 
-import danielworld.compassproject.util.Logger;
+import com.namgyuworld.utility.Logger;
+
 import danielworld.compassproject.util.dialog.AlertDialogUtil;
 
 /**
