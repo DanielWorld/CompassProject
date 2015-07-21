@@ -13,12 +13,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import com.namgyuworld.utility.Logger;
+
 import danielworld.compassproject.R;
 import danielworld.compassproject.activities.MainActivity;
 import danielworld.compassproject.preference.CompassPreference;
 import danielworld.compassproject.service.GPSTracker;
 import danielworld.compassproject.util.EarthDegreeConverter;
-import danielworld.compassproject.util.Logger;
 
 
 /**
